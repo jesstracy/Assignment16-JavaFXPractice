@@ -53,10 +53,10 @@ public class Assignment16 extends Application {
                     graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
                 }
                 if (event.getCode() == KeyCode.UP) {
-                    strokeSize++;
+                    setStrokeSize(strokeSize + 1);
                 }
                 if (event.getCode() == KeyCode.DOWN) {
-                    strokeSize--;
+                    setStrokeSize(strokeSize - 1);
                 }
             }
         });
@@ -82,6 +82,18 @@ public class Assignment16 extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setStrokeSize(double strokeSize) {
+        if (strokeSize < 2) {
+            System.out.println("The stroke size cannot be less than 2.");
+            this.strokeSize = 2;
+        } else if (strokeSize > 20) {
+            System.out.println("The stroke size cannot be greater than 20.");
+            this.strokeSize = 20;
+        } else {
+            this.strokeSize = strokeSize;
+        }
     }
 
     private void drawShapes(GraphicsContext gc) {
