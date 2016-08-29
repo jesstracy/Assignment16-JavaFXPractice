@@ -10,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -20,6 +22,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class PracticeFX extends Application {
     private final double DEFAULT_WIDTH = 600;
     private final double DEFAULT_HEIGHT = 800;
+    private double rectangleWidth = 15;
+    private double rectangleHeight = 15;
+    private boolean rectangleFlag = true;
 
     public void start(Stage primaryStage) {
         Group rootGroup = new Group();
@@ -31,7 +36,8 @@ public class PracticeFX extends Application {
 
         graphicsContext.setLineWidth(2);
 
-        graphicsContext.strokeText("Type the letters A through H", 50, 50);
+        graphicsContext.setFont(Font.font("Verdana"));
+        graphicsContext.strokeText("Type the letters A through H\nPress alt to rotate AT YOUR OWN RISK!!!", 50, 50);
 
         canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
@@ -39,7 +45,21 @@ public class PracticeFX extends Application {
 //                graphicsContext.clearRect(event.getX(), event.getY(), 25, 25);
 //                graphicsContext.clearRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 graphicsContext.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
-                graphicsContext.strokeRoundRect(event.getX(), event.getY(), 15, 15, 5, 5);
+                graphicsContext.strokeRoundRect(event.getX(), event.getY(), rectangleWidth, rectangleHeight, 5, 5);
+//                graphicsContext.rotate(5);
+                if (rectangleFlag) {
+                    rectangleWidth += 2;
+                    rectangleHeight += 2;
+                    if (rectangleWidth > 50) {
+                        rectangleFlag = false;
+                    }
+                } else {
+                    rectangleWidth -= 2;
+                    rectangleHeight -= 2;
+                    if (rectangleWidth < 4) {
+                        rectangleFlag = true;
+                    }
+                }
             }
         });
 
@@ -63,8 +83,9 @@ public class PracticeFX extends Application {
                 }
 
                 if (event.getText().equalsIgnoreCase("D")) {
-                    graphicsContext.setLineWidth(8);
-                    graphicsContext.strokeLine(210, 120, 310, 120);
+//                    graphicsContext.setLineWidth(8);
+                    graphicsContext.setFill(Color.BLACK);
+                    graphicsContext.fillRect(205, 115, 100, 8);
                 }
 
                 if (event.getText().equalsIgnoreCase("E")) {
@@ -74,7 +95,8 @@ public class PracticeFX extends Application {
 
                 // body
                 if (event.getText().equalsIgnoreCase("F")) {
-                    graphicsContext.strokeLine(240, 205, 240, 400);
+//                    graphicsContext.setFill(Color.BLACK);
+                    graphicsContext.strokeLine(240, 200, 240, 400);
                 }
 
                 // legs
@@ -87,6 +109,10 @@ public class PracticeFX extends Application {
                 if (event.getText().equalsIgnoreCase("H")) {
                     graphicsContext.strokeLine(240, 265, 290, 350);
                     graphicsContext.strokeLine(240, 265, 190, 350);
+                }
+
+                if (event.isAltDown()) {
+                    graphicsContext.rotate(5);
                 }
             }
         });
