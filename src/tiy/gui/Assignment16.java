@@ -65,9 +65,17 @@ public class Assignment16 extends Application {
 
             @Override
             public void handle(MouseEvent e) {
+                graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
                 System.out.println("x: " + e.getX() + ", y: " + e.getY());
                 // this is what makes the little dots that trail after it
                 graphicsContext.strokeOval(e.getX(), e.getY(), strokeSize, strokeSize);
+
+                //Make it draw circles when the mouse moves like demo'd in class!
+                int numBalls = 300;
+                for(int counter = 0; counter < numBalls; counter++) {
+                    graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
+                    graphicsContext.fillOval(Math.random() * e.getX(), Math.random() * e.getY(), 20, 20);
+                }
             }
         });
 
