@@ -6,10 +6,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -36,12 +38,26 @@ public class Assignment16 extends Application {
         graphicsContext.setLineWidth(2);
 
 //        drawShapes(graphicsContext);
+        String myString;
+
 
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 System.out.println("Key pressed was: " + event.getCode().getName());
                 //event.getText() will tell you uppercase vs lowercase
+                if (event.getCode().getName().equals("A")) {
+                    graphicsContext.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
+                }
+                if (event.getCode().getName().equals("C")) {
+                    graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
+                }
+                if (event.getCode() == KeyCode.UP) {
+                    strokeSize++;
+                }
+                if (event.getCode() == KeyCode.DOWN) {
+                    strokeSize--;
+                }
             }
         });
 
@@ -51,11 +67,7 @@ public class Assignment16 extends Application {
             public void handle(MouseEvent e) {
                 System.out.println("x: " + e.getX() + ", y: " + e.getY());
                 // this is what makes the little dots that trail after it
-//                graphicsContext.strokeOval(e.getX(), e.getY(), strokeSize, strokeSize);
-
-                // need to make it print the oval and then clear the screen each time so that it's just one dot!!
                 graphicsContext.strokeOval(e.getX(), e.getY(), strokeSize, strokeSize);
-//                graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
             }
         });
 
