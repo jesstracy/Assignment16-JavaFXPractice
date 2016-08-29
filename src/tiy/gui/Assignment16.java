@@ -21,6 +21,7 @@ public class Assignment16 extends Application {
     final double DEFAULT_SCENE_HEIGHT = 600;
     final double DEFAULT_SCENE_WIDTH = 800;
     double strokeSize = 2;
+    int numBalls = 300;
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,8 +38,6 @@ public class Assignment16 extends Application {
         graphicsContext.setStroke(Color.color(Math.random(), Math.random(), Math.random()));
         graphicsContext.setLineWidth(2);
 
-//        drawShapes(graphicsContext);
-        String myString;
 
 
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -58,10 +57,15 @@ public class Assignment16 extends Application {
                 if (event.getCode() == KeyCode.DOWN) {
                     setStrokeSize(strokeSize - 1);
                 }
-
-
+                if (event.getCode() == KeyCode.LEFT) {
+                    setNumBalls(numBalls - 5);
+                }
+                if (event.getCode() == KeyCode.RIGHT) {
+                    setNumBalls(numBalls + 5);
+                }
             }
         });
+
 
         canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
 
@@ -75,7 +79,6 @@ public class Assignment16 extends Application {
                 if (e.isAltDown()) {
                     graphicsContext.clearRect(0, 0, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
                     //Make it draw circles when the mouse moves like demo'd in class!
-                    int numBalls = 300;
                     for (int counter = 0; counter < numBalls; counter++) {
                         graphicsContext.setFill(Color.color(Math.random(), Math.random(), Math.random()));
                         graphicsContext.fillOval(Math.random() * e.getX(), Math.random() * e.getY(), 20, 20);
@@ -106,6 +109,18 @@ public class Assignment16 extends Application {
             this.strokeSize = 20;
         } else {
             this.strokeSize = strokeSize;
+        }
+    }
+
+    public void setNumBalls(int numBalls) {
+        if (numBalls < 1) {
+            System.out.println("The number of balls can't be less than 1!");
+            this.numBalls = 1;
+        } else if (numBalls > 500) {
+            System.out.println("The stroke size cannot be greater than 500!");
+            this.numBalls = 500;
+        } else {
+            this.numBalls = numBalls;
         }
     }
 
